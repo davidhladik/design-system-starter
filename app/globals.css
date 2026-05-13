@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design tokens for this project.
+ *
+ * Token philosophy and Figma-to-code mapping is documented in design-tokens.md.
+ * Read that file before adding or modifying variables here.
+ *
+ * Format: OKLCH with the full oklch() wrapper (shadcn 2024+ convention).
+ * Every variable defined in :root MUST also be defined in .dark with its
+ * dark mode value. Never break mode parity.
+ *
+ * Tokens are grouped to match the design-tokens.md mapping table:
+ *   - Default surfaces and text
+ *   - Card
+ *   - Component (buttons, popover, accent state)
+ *   - Status (success, warning, error)
+ *   - Brand
+ *   - Border and focus ring
+ *   - Sidebar
+ *   - Charts
+ */
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -10,48 +31,180 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --radius: 0.5rem;
+    /* ─── Default ───────────────────────────────────────────────────── */
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+
+    /* Added — see design-tokens.md */
+    --muted-secondary: oklch(0.93 0 0);            /* bg-muted-hard */
+    --muted-foreground-secondary: oklch(0.708 0 0); /* fg-tertiary */
+    --inverted: oklch(0.145 0 0);                  /* bg-inverted */
+    --inverted-foreground: oklch(0.985 0 0);       /* fg-inverted */
+
+    /* ─── Card ──────────────────────────────────────────────────────── */
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+
+    /* Added */
+    --card-muted: oklch(0.97 0 0);
+
+    /* ─── Component: popover ────────────────────────────────────────── */
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+
+    /* ─── Component: primary button ─────────────────────────────────── */
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+
+    /* ─── Component: secondary button ───────────────────────────────── */
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+
+    /* ─── Component: destructive button ─────────────────────────────── */
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.985 0 0);
+
+    /* ─── Component: accent (hover/focus on neutral items) ──────────── */
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+
+    /* ─── Status (Added) ────────────────────────────────────────────── */
+    --success: oklch(0.72 0.18 145);
+    --success-foreground: oklch(0.985 0 0);
+
+    --warning: oklch(0.82 0.17 85);
+    --warning-foreground: oklch(0.205 0 0);
+
+    --error: oklch(0.577 0.245 27.325);
+    --error-foreground: oklch(0.985 0 0);
+
+    /* ─── Brand (Added) ─────────────────────────────────────────────── */
+    --brand-primary: oklch(0.55 0.22 265);
+    --brand-primary-foreground: oklch(0.985 0 0);
+
+    --brand-secondary: oklch(0.65 0.18 195);
+    --brand-secondary-foreground: oklch(0.145 0 0);
+
+    /* ─── Border and focus ring ─────────────────────────────────────── */
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --ring-offset: oklch(1 0 0);
+
+    /* Added */
+    --border-secondary: oklch(0.96 0 0);
+
+    /* ─── Sidebar ───────────────────────────────────────────────────── */
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+
+    /* ─── Charts ────────────────────────────────────────────────────── */
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+
+    /* ─── Radius ────────────────────────────────────────────────────── */
+    --radius: 0.625rem;
   }
+
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    /* ─── Default ───────────────────────────────────────────────────── */
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+
+    /* Added */
+    --muted-secondary: oklch(0.32 0 0);
+    --muted-foreground-secondary: oklch(0.556 0 0);
+    --inverted: oklch(0.985 0 0);
+    --inverted-foreground: oklch(0.145 0 0);
+
+    /* ─── Card ──────────────────────────────────────────────────────── */
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+
+    /* Added */
+    --card-muted: oklch(0.269 0 0);
+
+    /* ─── Component: popover ────────────────────────────────────────── */
+    --popover: oklch(0.269 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+
+    /* ─── Component: primary button ─────────────────────────────────── */
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+
+    /* ─── Component: secondary button ───────────────────────────────── */
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+
+    /* ─── Component: destructive button ─────────────────────────────── */
+    --destructive: oklch(0.704 0.191 22.216);
+    --destructive-foreground: oklch(0.985 0 0);
+
+    /* ─── Component: accent (hover/focus on neutral items) ──────────── */
+    --accent: oklch(0.371 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+
+    /* ─── Status (Added) ────────────────────────────────────────────── */
+    --success: oklch(0.65 0.17 145);
+    --success-foreground: oklch(0.985 0 0);
+
+    --warning: oklch(0.75 0.16 85);
+    --warning-foreground: oklch(0.145 0 0);
+
+    --error: oklch(0.704 0.191 22.216);
+    --error-foreground: oklch(0.985 0 0);
+
+    /* ─── Brand (Added) ─────────────────────────────────────────────── */
+    --brand-primary: oklch(0.62 0.2 265);
+    --brand-primary-foreground: oklch(0.985 0 0);
+
+    --brand-secondary: oklch(0.7 0.16 195);
+    --brand-secondary-foreground: oklch(0.145 0 0);
+
+    /* ─── Border and focus ring ─────────────────────────────────────── */
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --ring-offset: oklch(0.145 0 0);
+
+    /* Added */
+    --border-secondary: oklch(1 0 0 / 5%);
+
+    /* ─── Sidebar ───────────────────────────────────────────────────── */
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+
+    /* ─── Charts ────────────────────────────────────────────────────── */
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
   }
+}
+
+@layer base {
   * {
     @apply border-border;
   }
