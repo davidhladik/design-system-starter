@@ -129,9 +129,9 @@
     --muted-foreground: oklch(0.556 0 0);
 
     /* Added — see design-tokens.md */
-    --muted-secondary: oklch(0.93 0 0);
+    --muted-secondary: oklch(0.922 0 0);           /* bg-muted-hard — neutral/200 */
     --muted-foreground-secondary: oklch(0.708 0 0);
-    --inverted: oklch(0.145 0 0);
+    --inverted: oklch(0.147 0.004 49);             /* bg-inverted — stone/950 warm near-black */
     --inverted-foreground: oklch(0.985 0 0);
 
     /* ─── Card ────────────────────────────────────────────────────────── */
@@ -146,7 +146,7 @@
     --popover-foreground: oklch(0.145 0 0);
 
     /* ─── Component: primary button ───────────────────────────────────── */
-    --primary: oklch(0.205 0 0);
+    --primary: oklch(0.511 0.23 277);
     --primary-foreground: oklch(0.985 0 0);
 
     /* ─── Component: secondary button ─────────────────────────────────── */
@@ -154,7 +154,7 @@
     --secondary-foreground: oklch(0.205 0 0);
 
     /* ─── Component: destructive button ───────────────────────────────── */
-    --destructive: oklch(0.577 0.245 27.325);
+    --destructive: oklch(0.577 0.215 27);
     --destructive-foreground: oklch(0.985 0 0);
 
     /* ─── Component: accent (hover/focus on neutral items) ────────────── */
@@ -172,11 +172,11 @@
     --error-foreground: oklch(0.985 0 0);
 
     /* ─── Brand (Added) ───────────────────────────────────────────────── */
-    --brand-primary: oklch(0.55 0.22 265);
+    --brand-primary: oklch(0.511 0.23 277);
     --brand-primary-foreground: oklch(0.985 0 0);
 
-    --brand-secondary: oklch(0.65 0.18 195);
-    --brand-secondary-foreground: oklch(0.145 0 0);
+    --brand-secondary: oklch(0.591 0.257 323);
+    --brand-secondary-foreground: oklch(0.985 0 0);
 
     /* ─── Border and focus ring ───────────────────────────────────────── */
     --border: oklch(0.922 0 0);
@@ -217,9 +217,9 @@
     --muted-foreground: oklch(0.708 0 0);
 
     /* Added */
-    --muted-secondary: oklch(0.32 0 0);
+    --muted-secondary: oklch(0.371 0 0);           /* bg-muted-hard — neutral/700 */
     --muted-foreground-secondary: oklch(0.556 0 0);
-    --inverted: oklch(0.985 0 0);
+    --inverted: oklch(1 0 0);                      /* bg-inverted — white */
     --inverted-foreground: oklch(0.145 0 0);
 
     /* ─── Card ────────────────────────────────────────────────────────── */
@@ -234,15 +234,15 @@
     --popover-foreground: oklch(0.985 0 0);
 
     /* ─── Component: primary button ───────────────────────────────────── */
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
+    --primary: oklch(0.511 0.23 277);
+    --primary-foreground: oklch(0.985 0 0);
 
     /* ─── Component: secondary button ─────────────────────────────────── */
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
 
     /* ─── Component: destructive button ───────────────────────────────── */
-    --destructive: oklch(0.704 0.191 22.216);
+    --destructive: oklch(0.711 0.166 22);
     --destructive-foreground: oklch(0.985 0 0);
 
     /* ─── Component: accent (hover/focus on neutral items) ────────────── */
@@ -260,11 +260,11 @@
     --error-foreground: oklch(0.985 0 0);
 
     /* ─── Brand (Added) ───────────────────────────────────────────────── */
-    --brand-primary: oklch(0.62 0.2 265);
+    --brand-primary: oklch(0.511 0.23 277);
     --brand-primary-foreground: oklch(0.985 0 0);
 
-    --brand-secondary: oklch(0.7 0.16 195);
-    --brand-secondary-foreground: oklch(0.145 0 0);
+    --brand-secondary: oklch(0.591 0.257 323);
+    --brand-secondary-foreground: oklch(0.985 0 0);
 
     /* ─── Border and focus ring ───────────────────────────────────────── */
     --border: oklch(1 0 0 / 10%);
