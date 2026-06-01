@@ -8,15 +8,34 @@ const nav = [
   {
     section: 'Design System',
     items: [
-      { label: 'Tailwind CSS', href: '/stylesheet/design-system/tailwind' },
-      { label: 'Theme', href: '/stylesheet/design-system/theme' },
-      { label: 'Mode', href: '/stylesheet/design-system/mode' },
+      { label: 'Tailwind CSS',  href: '/stylesheet/design-system/tailwind' },
+      { label: 'Theme',         href: '/stylesheet/design-system/theme' },
+      { label: 'Mode',          href: '/stylesheet/design-system/mode' },
+      { label: 'Typography',    href: '/stylesheet/design-system/typography' },
     ],
   },
   {
     section: 'Components',
     items: [
-      { label: 'Button', href: '/stylesheet/components/button' },
+      { label: 'Button',        href: '/stylesheet/components/button' },
+      { label: 'Input',         href: '/stylesheet/components/input' },
+      { label: 'Textarea',      href: '/stylesheet/components/textarea' },
+      { label: 'Switch',        href: '/stylesheet/components/switch' },
+      { label: 'Tabs',          href: '/stylesheet/components/tabs' },
+      { label: 'Badge',         href: '/stylesheet/components/badge' },
+      { label: 'Toggle Group',  href: '/stylesheet/components/toggle-group' },
+    ],
+  },
+  {
+    section: 'Patterns',
+    items: [
+      { label: 'Card',          href: '/stylesheet/patterns/card' },
+      { label: 'Stats Card',    href: '/stylesheet/patterns/stats-card' },
+      { label: 'Sidebar',       href: '/stylesheet/patterns/sidebar' },
+      { label: 'Top Bar',       href: '/stylesheet/patterns/top-bar' },
+      { label: 'Data Table',    href: '/stylesheet/patterns/data-table' },
+      { label: 'Mail Layout',   href: '/stylesheet/patterns/mail-layout' },
+      { label: 'Message Card',  href: '/stylesheet/patterns/message-card' },
     ],
   },
 ]

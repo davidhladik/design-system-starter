@@ -1,86 +1,164 @@
-import { Swatch, DarkSwatch, Table, Thead, Th, Tbody, Tr, Td, PageHeader, Section } from '../../_components/token-table'
+import { Table, Thead, Th, Tbody, Tr, Td, PageHeader, Section } from '../../_components/token-table'
+import { LiveSwatch, LiveDarkSwatch } from '../../_components/color-hex'
 
-// Mode collection: semantic tokens as used in code, with live CSS variable resolution.
-// Light swatch uses the current (light) mode, dark swatch forces .dark context.
-// Structure mirrors the Figma "Mode" collection frames.
+// Mode page — Layer 3 of the three-layer token architecture.
+//
+// These are the component-facing CSS variables. In :root they resolve to their
+// -light Layer 2 counterpart; in .dark they resolve to their -dark counterpart.
+// This is the only layer that component code and Tailwind utilities reference.
+// Source: globals.css Layer 3 (:root / .dark blocks).
 
 const modeGroups = [
   {
-    group: 'background / default',
+    group: 'Background / Foreground',
     tokens: [
-      { figma: 'background/default/bg-default',       cssVar: '--background',        label: 'bg-default' },
-      { figma: 'background/default/bg-muted-soft',    cssVar: '--muted',             label: 'bg-muted-soft' },
-      { figma: 'background/default/bg-muted-hard',    cssVar: '--muted-secondary',   label: 'bg-muted-hard' },
-      { figma: 'background/default/bg-card',          cssVar: '--card',              label: 'bg-card' },
-      { figma: 'background/default/bg-card-muted',    cssVar: '--card-muted',        label: 'bg-card-muted' },
-      { figma: 'background/default/bg-inverted',      cssVar: '--inverted',          label: 'bg-inverted' },
+      { label: 'background',                  cssVar: '--background',                  lightVar: '--background-light',                  darkVar: '--background-dark' },
+      { label: 'foreground',                  cssVar: '--foreground',                  lightVar: '--foreground-light',                  darkVar: '--foreground-dark' },
     ],
   },
   {
-    group: 'background / brand',
+    group: 'Muted',
     tokens: [
-      { figma: 'background/brand/bg-brand-primary',   cssVar: '--brand-primary',     label: 'bg-brand-primary' },
-      { figma: 'background/brand/bg-brand-secondary', cssVar: '--brand-secondary',   label: 'bg-brand-secondary' },
+      { label: 'muted',                        cssVar: '--muted',                        lightVar: '--muted-light',                        darkVar: '--muted-dark' },
+      { label: 'muted-foreground',             cssVar: '--muted-foreground',             lightVar: '--muted-foreground-light',             darkVar: '--muted-foreground-dark' },
+      { label: 'muted-secondary',              cssVar: '--muted-secondary',              lightVar: '--muted-secondary-light',              darkVar: '--muted-secondary-dark' },
+      { label: 'muted-foreground-secondary',   cssVar: '--muted-foreground-secondary',   lightVar: '--muted-foreground-secondary-light',   darkVar: '--muted-foreground-secondary-dark' },
     ],
   },
   {
-    group: 'background / component',
+    group: 'Inverted',
     tokens: [
-      { figma: 'background/component/bg-button-primary',      cssVar: '--primary',       label: 'bg-button-primary' },
-      { figma: 'background/component/bg-button-secondary',    cssVar: '--secondary',     label: 'bg-button-secondary' },
-      { figma: 'background/component/bg-button-destructive',  cssVar: '--destructive',   label: 'bg-button-destructive' },
-      { figma: 'background/component/bg-active-state-accent', cssVar: '--accent',        label: 'bg-active-state-accent' },
-      { figma: 'background/component/bg-popover',             cssVar: '--popover',       label: 'bg-popover' },
+      { label: 'inverted',                     cssVar: '--inverted',                     lightVar: '--inverted-light',                     darkVar: '--inverted-dark' },
+      { label: 'inverted-foreground',          cssVar: '--inverted-foreground',          lightVar: '--inverted-foreground-light',          darkVar: '--inverted-foreground-dark' },
     ],
   },
   {
-    group: 'background / sidebar',
+    group: 'Card',
     tokens: [
-      { figma: 'background/sidebar/bg-sidebar-default', cssVar: '--sidebar',               label: 'bg-sidebar-default' },
-      { figma: 'background/sidebar/bg-sidebar-brand',   cssVar: '--sidebar-primary',       label: 'bg-sidebar-brand' },
-      { figma: 'background/sidebar/bg-sidebar-active',  cssVar: '--sidebar-accent',        label: 'bg-sidebar-active' },
+      { label: 'card',                         cssVar: '--card',                         lightVar: '--card-light',                         darkVar: '--card-dark' },
+      { label: 'card-foreground',              cssVar: '--card-foreground',              lightVar: '--card-foreground-light',              darkVar: '--card-foreground-dark' },
+      { label: 'card-muted',                   cssVar: '--card-muted',                   lightVar: '--card-muted-light',                   darkVar: '--card-muted-dark' },
     ],
   },
   {
-    group: 'background / status',
+    group: 'Popover',
     tokens: [
-      { figma: 'background/status/bg-status-success',  cssVar: '--success',   label: 'bg-status-success' },
-      { figma: 'background/status/bg-status-warning',  cssVar: '--warning',   label: 'bg-status-warning' },
-      { figma: 'background/status/bg-status-error',    cssVar: '--error',     label: 'bg-status-error' },
+      { label: 'popover',                      cssVar: '--popover',                      lightVar: '--popover-light',                      darkVar: '--popover-dark' },
+      { label: 'popover-foreground',           cssVar: '--popover-foreground',           lightVar: '--popover-foreground-light',           darkVar: '--popover-foreground-dark' },
     ],
   },
   {
-    group: 'border / default',
+    group: 'Primary',
     tokens: [
-      { figma: 'border/default/bd-primary',    cssVar: '--border',           label: 'bd-primary' },
-      { figma: 'border/default/bd-secondary',  cssVar: '--border-secondary', label: 'bd-secondary' },
-      { figma: 'border/component/bd-input',    cssVar: '--input',            label: 'bd-input-button' },
-      { figma: 'border/focus-ring/bd-focus',   cssVar: '--ring',             label: 'bd-focus-default' },
+      { label: 'primary',                      cssVar: '--primary',                      lightVar: '--primary-light',                      darkVar: '--primary-dark' },
+      { label: 'primary-foreground',           cssVar: '--primary-foreground',           lightVar: '--primary-foreground-light',           darkVar: '--primary-foreground-dark' },
+    ],
+  },
+  {
+    group: 'Secondary',
+    tokens: [
+      { label: 'secondary',                    cssVar: '--secondary',                    lightVar: '--secondary-light',                    darkVar: '--secondary-dark' },
+      { label: 'secondary-foreground',         cssVar: '--secondary-foreground',         lightVar: '--secondary-foreground-light',         darkVar: '--secondary-foreground-dark' },
+    ],
+  },
+  {
+    group: 'Destructive',
+    tokens: [
+      { label: 'destructive',                  cssVar: '--destructive',                  lightVar: '--destructive-light',                  darkVar: '--destructive-dark' },
+      { label: 'destructive-foreground',       cssVar: '--destructive-foreground',       lightVar: '--destructive-foreground-light',       darkVar: '--destructive-foreground-dark' },
+    ],
+  },
+  {
+    group: 'Accent',
+    tokens: [
+      { label: 'accent',                       cssVar: '--accent',                       lightVar: '--accent-light',                       darkVar: '--accent-dark' },
+      { label: 'accent-foreground',            cssVar: '--accent-foreground',            lightVar: '--accent-foreground-light',            darkVar: '--accent-foreground-dark' },
+    ],
+  },
+  {
+    group: 'Brand',
+    tokens: [
+      { label: 'brand-primary',                cssVar: '--brand-primary',                lightVar: '--primary-light',                      darkVar: '--primary-dark' },
+      { label: 'brand-primary-foreground',     cssVar: '--brand-primary-foreground',     lightVar: '--primary-foreground-light',           darkVar: '--primary-foreground-dark' },
+      { label: 'brand-secondary',              cssVar: '--brand-secondary',              lightVar: '--brand-secondary-light',              darkVar: '--brand-secondary-dark' },
+      { label: 'brand-secondary-foreground',   cssVar: '--brand-secondary-foreground',   lightVar: '--brand-secondary-foreground-light',   darkVar: '--brand-secondary-foreground-dark' },
+    ],
+  },
+  {
+    group: 'Status',
+    tokens: [
+      { label: 'success',                      cssVar: '--success',                      lightVar: '--success-foreground-light',           darkVar: '--success-foreground-dark' },
+      { label: 'success-foreground',           cssVar: '--success-foreground',           lightVar: '--success-foreground-light',           darkVar: '--success-foreground-dark' },
+      { label: 'warning',                      cssVar: '--warning',                      lightVar: '--warning-foreground-light',           darkVar: '--warning-foreground-dark' },
+      { label: 'warning-foreground',           cssVar: '--warning-foreground',           lightVar: '--warning-foreground-light',           darkVar: '--warning-foreground-dark' },
+    ],
+  },
+  {
+    group: 'Border',
+    tokens: [
+      { label: 'border',                       cssVar: '--border',                       lightVar: '--border-light',                       darkVar: '--border-dark' },
+      { label: 'border-secondary',             cssVar: '--border-secondary',             lightVar: '--border-secondary-light',             darkVar: '--border-secondary-dark' },
+      { label: 'border-bold',                  cssVar: '--border-bold',                  lightVar: '--border-bold-light',                  darkVar: '--border-bold-dark' },
+      { label: 'border-inverted',              cssVar: '--border-inverted',              lightVar: '--border-inverted-light',              darkVar: '--border-inverted-dark' },
+      { label: 'input',                        cssVar: '--input',                        lightVar: '--input-light',                        darkVar: '--input-dark' },
+      { label: 'ring',                         cssVar: '--ring',                         lightVar: '--ring-light',                         darkVar: '--ring-dark' },
+      { label: 'ring-offset',                  cssVar: '--ring-offset',                  lightVar: '--ring-offset-light',                  darkVar: '--ring-offset-dark' },
+    ],
+  },
+  {
+    group: 'Sidebar',
+    tokens: [
+      { label: 'sidebar',                      cssVar: '--sidebar',                      lightVar: '--sidebar-light',                      darkVar: '--sidebar-dark' },
+      { label: 'sidebar-foreground',           cssVar: '--sidebar-foreground',           lightVar: '--sidebar-foreground-light',           darkVar: '--sidebar-foreground-dark' },
+      { label: 'sidebar-primary',              cssVar: '--sidebar-primary',              lightVar: '--sidebar-primary-light',              darkVar: '--sidebar-primary-dark' },
+      { label: 'sidebar-primary-foreground',   cssVar: '--sidebar-primary-foreground',   lightVar: '--sidebar-primary-foreground-light',   darkVar: '--sidebar-primary-foreground-dark' },
+      { label: 'sidebar-accent',               cssVar: '--sidebar-accent',               lightVar: '--sidebar-accent-light',               darkVar: '--sidebar-accent-dark' },
+      { label: 'sidebar-accent-foreground',    cssVar: '--sidebar-accent-foreground',    lightVar: '--sidebar-accent-foreground-light',    darkVar: '--sidebar-accent-foreground-dark' },
+      { label: 'sidebar-border',               cssVar: '--sidebar-border',               lightVar: '--sidebar-border-light',               darkVar: '--sidebar-border-dark' },
+      { label: 'sidebar-ring',                 cssVar: '--sidebar-ring',                 lightVar: '--sidebar-ring-light',                 darkVar: '--sidebar-ring-dark' },
+    ],
+  },
+  {
+    group: 'Charts',
+    tokens: [
+      { label: 'chart-1',                      cssVar: '--chart-1',                      lightVar: '—',                                    darkVar: '—' },
+      { label: 'chart-2',                      cssVar: '--chart-2',                      lightVar: '—',                                    darkVar: '—' },
+      { label: 'chart-3',                      cssVar: '--chart-3',                      lightVar: '—',                                    darkVar: '—' },
+      { label: 'chart-4',                      cssVar: '--chart-4',                      lightVar: '—',                                    darkVar: '—' },
+      { label: 'chart-5',                      cssVar: '--chart-5',                      lightVar: '—',                                    darkVar: '—' },
     ],
   },
 ]
 
-function ModeTable({ tokens }: { tokens: { figma: string; cssVar: string; label: string }[] }) {
+function ModeTable({
+  tokens,
+}: {
+  tokens: { label: string; cssVar: string; lightVar: string; darkVar: string }[]
+}) {
   return (
     <Table>
       <Thead>
-        <Th>Figma name</Th>
         <Th>CSS variable</Th>
+        <Th>Layer 2 light</Th>
         <Th>Light</Th>
+        <Th>Layer 2 dark</Th>
         <Th>Dark</Th>
       </Thead>
       <Tbody>
-        {tokens.map(({ figma, cssVar, label }) => (
+        {tokens.map(({ label, cssVar, lightVar, darkVar }) => (
           <Tr key={cssVar}>
             <Td>
               <span className="text-sm text-foreground">{label}</span>
-              <span className="block text-xs text-muted-foreground">{figma}</span>
+              <span className="block font-mono text-xs text-muted-foreground">{cssVar}</span>
             </Td>
             <Td>
-              <span className="font-mono text-xs text-muted-foreground">{cssVar}</span>
+              <span className="font-mono text-xs text-muted-foreground">{lightVar}</span>
             </Td>
-            <Td><Swatch cssVar={cssVar} /></Td>
-            <Td><DarkSwatch cssVar={cssVar} /></Td>
+            <Td><LiveSwatch cssVar={cssVar} /></Td>
+            <Td>
+              <span className="font-mono text-xs text-muted-foreground">{darkVar}</span>
+            </Td>
+            <Td><LiveDarkSwatch cssVar={cssVar} /></Td>
           </Tr>
         ))}
       </Tbody>
@@ -90,10 +168,10 @@ function ModeTable({ tokens }: { tokens: { figma: string; cssVar: string; label:
 
 export default function ModePage() {
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-4xl">
       <PageHeader
         title="Mode"
-        description="Live CSS variable values, resolved from globals.css. Light column shows :root values, dark column forces .dark context. Foreground tokens will appear here once added to Figma."
+        description="Layer 3 of the three-layer token architecture — the component-facing CSS variables. In light mode (:root) each variable resolves to its -light Layer 2 counterpart; in dark mode (.dark) to its -dark counterpart. These are the only variables component code and Tailwind utilities should reference."
       />
       {modeGroups.map(({ group, tokens }) => (
         <Section key={group} title={group}>

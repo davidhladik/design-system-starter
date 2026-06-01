@@ -94,16 +94,13 @@ The table is the canonical reference. Every Figma token maps to either an existi
 | `foreground/default/fg-secondary` | `--muted-foreground` | `text-muted-foreground` | shadcn | Secondary text, captions, hints |
 | `foreground/default/fg-tertiary` | `--muted-foreground-secondary` | `text-muted-foreground-secondary` | **Added** | Lowest-emphasis text — timestamps, metadata, very subtle labels |
 | `foreground/default/fg-inverted` | `--inverted-foreground` | `text-inverted-foreground` | **Added** | Text on inverted surfaces (e.g. dark callouts in light mode) |
-| `foreground/brand/fg-brand-primary` | `--brand-primary-foreground` | `text-brand-primary-foreground` | **Added** | Text and icons in the primary brand color |
-| `foreground/brand/fg-brand-secondary` | `--brand-secondary-foreground` | `text-brand-secondary-foreground` | **Added** | Text and icons in the secondary brand color |
-| `foreground/component/fg-button-primary` | `--primary-foreground` | `text-primary-foreground` | shadcn | Text and icons on primary buttons |
-| `foreground/component/fg-button-secondary` | `--secondary-foreground` | `text-secondary-foreground` | shadcn | Text and icons on secondary buttons |
-| `foreground/component/fg-button-destructive` | `--destructive-foreground` | `text-destructive-foreground` | shadcn | Text and icons on destructive buttons |
+| `foreground/component/fg-on-primary` | `--primary-foreground` | `text-primary-foreground` | shadcn | Text and icons on primary buttons |
+| `foreground/component/fg-on-secondary` | `--secondary-foreground` | `text-secondary-foreground` | shadcn | Text and icons on secondary buttons |
+| `foreground/component/fg-on-destructive` | `--destructive-foreground` | `text-destructive-foreground` | shadcn | Text and icons on destructive buttons |
 | `foreground/component/fg-active-state-accent` | `--accent-foreground` | `text-accent-foreground` | shadcn | Text on hover/focus states for neutral menu items (dropdowns, selects, command palette) |
 | `foreground/component/fg-popover` | `--popover-foreground` | `text-popover-foreground` | shadcn | Text inside popovers and tooltips |
-| `foreground/status/fg-status-success` | `--success-foreground` | `text-success-foreground` | **Added** | Text and icons in success states |
+| `alpha/brand/success-90` | `--success-foreground` | `text-success-foreground` | **Added** | Text and icons in success states |
 | `foreground/status/fg-status-warning` | `--warning-foreground` | `text-warning-foreground` | **Added** | Text and icons in warning states |
-| `foreground/status/fg-status-error` | `--error-foreground` | `text-error-foreground` | **Added** | Text and icons in error states (distinct from destructive buttons) |
 | `foreground/sidebar/fg-sidebar-primary` | `--sidebar-foreground` | `text-sidebar-foreground` | shadcn | Primary text in the sidebar |
 | `foreground/sidebar/fg-sidebar-inverted` | `--sidebar-primary-foreground` | `text-sidebar-primary-foreground` | shadcn | Text on the sidebar's branded/primary area |
 | `foreground/sidebar/fg-sidebar-active` | `--sidebar-accent-foreground` | `text-sidebar-accent-foreground` | shadcn | Text on active/hovered sidebar items |
@@ -115,19 +112,17 @@ The table is the canonical reference. Every Figma token maps to either an existi
 | `background/default/bg-default` | `--background` | `bg-background` | shadcn | Page background |
 | `background/default/bg-muted-soft` | `--muted` | `bg-muted` | shadcn | Subtle filled areas, code blocks, secondary sections |
 | `background/default/bg-muted-hard` | `--muted-secondary` | `bg-muted-secondary` | **Added** | More pronounced filled background than `bg-muted-soft` — use when extra contrast is needed |
-| `background/default/bg-inverted` | `--inverted` | `bg-inverted` | **Added** | Inverted surface for emphasis (dark in light mode, light in dark mode) |
+| `background/default/bg-inverted` | `--inverted` | `bg-inverted` | **Added** | Inverted surface for emphasis (pure neutral black `#0a0a0a` in light mode, white in dark mode) |
 | `background/default/bg-card` | `--card` | `bg-card` | shadcn | Card and panel surfaces |
 | `background/default/bg-card-muted` | `--card-muted` | `bg-card-muted` | **Added** | Recessed section inside a card (e.g. a divider band, summary footer) |
-| `background/brand/bg-brand-primary` | `--brand-primary` | `bg-brand-primary` | **Added** | Primary brand-colored surface |
-| `background/brand/bg-brand-secondary` | `--brand-secondary` | `bg-brand-secondary` | **Added** | Secondary brand-colored surface |
-| `background/component/bg-button-primary` | `--primary` | `bg-primary` | shadcn | Primary button background |
+| `brand/brand-secondary` | `--brand-secondary` | `bg-brand-secondary` | **Added** | Secondary brand-colored surface |
+| `brand/brand-primary` | `--primary` | `bg-primary` | shadcn | Primary button background |
 | `background/component/bg-button-secondary` | `--secondary` | `bg-secondary` | shadcn | Secondary button background |
-| `background/component/bg-button-destructive` | `--destructive` | `bg-destructive` | shadcn | Destructive button background |
+| `brand/error` | `--destructive` | `bg-destructive` | shadcn | Destructive button background |
 | `background/component/bg-active-state-accent` | `--accent` | `bg-accent` | shadcn | Hover/focus background on neutral interactive items (menu options, select rows, command palette entries). **Not for brand emphasis.** |
 | `background/component/bg-popover` | `--popover` | `bg-popover` | shadcn | Popover and tooltip background |
-| `background/status/bg-status-success` | `--success` | `bg-success` | **Added** | Success state surface |
-| `background/status/bg-status-warning` | `--warning` | `bg-warning` | **Added** | Warning state surface |
-| `background/status/bg-status-error` | `--error` | `bg-error` | **Added** | Error state surface |
+| `brand/success` | `--success` | `bg-success` | **Added** | Success state surface |
+| `brand/warning` | `--warning` | `bg-warning` | **Added** | Warning state surface |
 | `background/sidebar/bg-sidebar-default` | `--sidebar` | `bg-sidebar` | shadcn | Default sidebar background |
 | `background/sidebar/bg-sidebar-brand` | `--sidebar-primary` | `bg-sidebar-primary` | shadcn | Sidebar branded/primary area |
 | `background/sidebar/bg-sidebar-active` | `--sidebar-accent` | `bg-sidebar-accent` | shadcn | Active or hovered sidebar item |
@@ -138,11 +133,27 @@ The table is the canonical reference. Every Figma token maps to either an existi
 |---|---|---|---|---|
 | `border/default/bd-primary` | `--border` | `border-border` | shadcn | Default component borders, dividers |
 | `border/default/bd-secondary` | `--border-secondary` | `border-secondary` | **Added** | Lower-emphasis border — table row dividers, subtle separators |
+| `border/default/bd-bold` | `--border-bold` | `border-bold` | **Added** | High-emphasis border — strong dividers, selected states, prominent outlines |
+| `border/default/bd-inverted` | `--border-inverted` | `border-inverted` | **Added** | Border on inverted surfaces |
 | `border/component/bd-input-button` | `--input` | `border-input` | shadcn | Borders on inputs and outline buttons |
-| `border/focus-ring/bd-focus-default` | `--ring` | `ring-ring` | shadcn | Default focus ring color |
-| `border/focus-ring/bd-focus-offset` | `--ring-offset` | `ring-offset` | shadcn | Focus ring offset color (gap between element and ring) |
+| `border/component/bd-focus-default` | `--ring` | `ring-ring` | shadcn | Default focus ring color |
+| `border/component/bd-focus-offset` | `--ring-offset` | `ring-offset` | shadcn | Focus ring offset color (gap between element and ring) |
 | `border/sidebar/bd-sidebar-primary` | `--sidebar-border` | `border-sidebar-border` | shadcn | Sidebar borders and dividers |
 | `border/sidebar/bd-focus-default` | `--sidebar-ring` | `ring-sidebar-ring` | shadcn | Focus ring color inside the sidebar |
+
+### Alpha — opacity utility tokens
+
+Alpha tokens are Figma utility swatches used as overlays and tinted fills. They are not mapped to individual CSS variables — use Tailwind's opacity modifier instead (e.g. `bg-primary/90`).
+
+| Figma group | Range | Light base | Dark base | Usage |
+|---|---|---|---|---|
+| `alpha/default/` | 5 – 90 | white (`#ffffff`) | neutral-800 (`#6A6A6A`) | General-purpose overlays on any surface |
+| `alpha/inverted/` | 5 – 90 | neutral-950 (`#0A0A0A`) | white (`#FFFFFF`) | Overlays on inverted surfaces |
+| `alpha/brand/brand-primary-90` | — | brand at 10% | brand at 10% | Tinted brand-primary fill |
+| `alpha/brand/brand-secondary-90` | — | fuchsia-600 at 10% | fuchsia-600 at 10% | Tinted brand-secondary fill |
+| `alpha/brand/success-90` | — | green-500 at 10% | green-500 at 10% | Success tint — also used as `--success-foreground` |
+| `alpha/brand/warning-90` | — | orange-500 at 10% | orange-500 at 10% | Warning tint |
+| `alpha/brand/error-90` | — | red-500 at 10% | red-500 at 10% | Error/destructive tint |
 
 ### Charts — data visualization colors
 
@@ -188,11 +199,9 @@ The redundant `bg-` prefix on the leaf is intentional: when a token is reference
 
 **`component/`** — Tokens scoped to specific UI components (buttons, popovers, active-state hovers). When a component has distinctive styling that doesn't generalize, its tokens live here.
 
-**`status/`** — Semantic state colors: success, warning, error. Used in alerts, notifications, validation messages, and status indicators. Note that `error` is distinct from `button-destructive` — error is for state communication, destructive is for buttons that perform destructive actions.
+**`status/`** — Semantic state colors: success and warning. Used in alerts, notifications, validation messages, and status indicators. Error states use `brand/destructive` directly. Success and warning backgrounds live under `brand/` (solid color) or `alpha/brand/` (tinted overlay).
 
 **`sidebar/`** — Sidebar has its own complete token set (foreground, background, border) because it often uses a distinct color scheme from the main content area. Treat it as a parallel theme within the system.
-
-**`focus-ring/`** — Focus indicators. Separate from regular borders because focus rings are offset rings, not layout-affecting borders.
 
 ### `accent` vs `muted`
 
@@ -202,13 +211,6 @@ These look similar in default themes but serve different purposes:
 - **`bg-active-state-accent`** (shadcn `accent`) — Interactive low-emphasis feedback. The moment of hover or focus on a selectable item (dropdown options, command palette entries).
 
 Despite similar default values, do not collapse them. `muted` is passive; `accent` is active feedback. They should be themeable independently.
-
-### `error` vs `destructive`
-
-- **`bg-status-error`** — Communicates an error state (form validation, failed requests, alert banners). Sits on the page alongside other content.
-- **`bg-button-destructive`** — The action color for buttons that delete or destroy. Applied to interactive elements the user clicks.
-
-A destructive button on an error toast would use `bg-button-destructive` for the button itself and `bg-status-error` for the toast background.
 
 ---
 

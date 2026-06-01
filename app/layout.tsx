@@ -12,6 +12,19 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+const ppNeueCorp = localFont({
+  src: "./fonts/PPNeueCorp-TightVariable.ttf",
+  variable: "--font-pp-neue-corp-tight",
+  weight: "100 900",
+});
+const maisonNeue = localFont({
+  src: [
+    { path: "./fonts/Maison Neue Book.otf",  weight: "400", style: "normal" },
+    { path: "./fonts/Maison Neue Demi.otf",  weight: "600", style: "normal" },
+    { path: "./fonts/Maison Neue Bold.otf",  weight: "700", style: "normal" },
+  ],
+  variable: "--font-maison-neue",
+});
 
 export const metadata: Metadata = {
   title: "Design System Starter",
@@ -25,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${ppNeueCorp.variable} ${maisonNeue.variable} antialiased`}>
         {children}
       </body>
     </html>
