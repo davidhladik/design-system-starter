@@ -3,7 +3,7 @@
 
 **What you'll end up with:** A design system project running on your computer and published online, where the colours and visual tokens in your code are automatically kept in sync with your Figma variables. After setup, Claude Code can implement any Figma screen as production-ready code with pixel-perfect accuracy.
 
-**Who this is for:** Designers or anyone setting up this workflow for the first time, including people who have never used a terminal before.
+**Who this is for:** Designers or anyone setting up this workflow for the first time. Most steps happen inside the Claude Code app — terminal commands are only needed for a few one-time setups.
 
 **Time to complete:** 90–120 minutes (most of it is waiting for things to install)
 
@@ -96,49 +96,39 @@ If you already have a Vercel account, **skip to Step 0.5**.
 
 ---
 
-## Step 0.5 — Install Claude Code
+## Step 0.5 — Install the Claude Code app
 
-> 💡 **What is Claude Code?** Claude Code is an AI coding assistant that runs in your terminal. Unlike a chat interface, it has direct access to your project files and can read, write, and run code autonomously. We'll use it to sync Figma variables into code and to implement Figma designs.
+> 💡 **What is Claude Code?** Claude Code is an AI assistant with direct access to your project files. Unlike the regular Claude chat, it can read, write, and edit code files on your computer autonomously. It has a built-in terminal for running commands, a file browser, and a chat panel where you give it instructions. We'll use it to sync Figma variables into code and to implement Figma designs.
 
-If you already have Claude Code installed and have used it in a project, **skip to Step 0.6**.
+If you already have the Claude Code app installed and logged in, **skip to Step 0.6**.
 
-1. Make sure Node.js is installed (Step 0.1)
-2. In your Terminal, run:
+1. Go to [claude.ai/download](https://claude.ai/download) and download the Claude Code app for your operating system
+2. Run the installer and open the app
+3. Sign in with your Anthropic account (or create a free account when prompted)
 
-```bash
-npm install -g @anthropic-ai/claude-code
-```
+> 💡 **Terminal inside Claude Code:** The Claude Code app has a built-in terminal — a tab at the bottom of the window where you can run commands. For all the `npm` and `git` commands in this guide, use this built-in terminal instead of opening a separate Terminal app. It works exactly the same way.
 
-3. Once installed, run:
-
-```bash
-claude
-```
-
-4. Follow the login prompt to connect your Anthropic account (or create one at [claude.ai](https://claude.ai))
-
-**✅ Verify:** Running `claude --version` prints a version number. Running `claude` opens an interactive session.
+**✅ Verify:** The Claude Code app opens, you're logged in, and you can see the chat panel and file browser.
 
 ---
 
 ## Step 0.6 — Enable the Figma MCP server in Claude Code
 
-> 💡 **What is an MCP server?** MCP (Model Context Protocol) is a system that gives Claude Code access to external tools and services — in this case, the Figma API. Without it, Claude can only read files on your computer. With the Figma MCP enabled, Claude can read your Figma file, inspect layers, and pull variable values directly.
+> 💡 **What is an MCP server?** MCP (Model Context Protocol) is a system that gives Claude Code access to external tools and services — in this case, Figma. Without it, Claude can only read files on your computer. With the Figma MCP enabled, Claude can open your Figma file, read layer properties, and pull variable values directly into your code.
 
-1. Open Claude Code in any directory: `claude`
-2. Type `/mcp` to open the MCP server management screen
-3. Look for **Figma** in the list and enable it
-4. If Figma isn't listed, install the Figma plugin for Claude Code:
-   - Go to [figma.com/developers](https://www.figma.com/developers) and follow the Claude Code plugin instructions
-   - Alternatively, add it via the Claude Code plugin manager: `/plugins`
-5. Restart Claude Code after enabling
+1. Open the Claude Code app
+2. Click the **Settings** icon (gear icon, usually bottom-left or top-right)
+3. Go to the **Extensions** or **MCP Servers** section
+4. Find **Figma** in the list and toggle it on
+5. If Figma isn't listed, click **Browse** or **Add** and search for the Figma plugin
+6. Save settings and restart the app
 
-**To verify the connection**, start a Claude session in any folder and ask:
-> *"Can you call get_metadata on this URL: https://www.figma.com/design/XRJX5AmcwXFSFOMC8YmYtF/shadcn-ui-kit-Claude-test?node-id=1-2"*
+**To verify the connection**, open any project in Claude Code and type in the chat:
+> *"Can you call get_metadata on this Figma URL: https://www.figma.com/design/XRJX5AmcwXFSFOMC8YmYtF/shadcn-ui-kit-Claude-test?node-id=1-2"*
 
-If Claude returns layer names and node information, the MCP is connected. If it says the tool isn't available, the MCP isn't enabled — revisit this step.
+If Claude returns a list of layer names, the connection is working. If it says something like "I don't have access to Figma tools", the MCP isn't enabled — go back and check Step 0.6.
 
-**✅ Verify:** Claude can call Figma tools and return design data from a Figma URL.
+**✅ Verify:** Claude responds with layer/node information from the Figma URL.
 
 ---
 
@@ -148,42 +138,44 @@ If Claude returns layer names and node information, the MCP is connected. If it 
 
 ## Step 1.1 — Decide where to put your project
 
-Your project will live in a folder on your computer. Decide where before running the command.
+Your project will live in a folder on your computer. Create a dedicated folder for it first — a good place is your home folder or a `Projects` folder on your Desktop.
 
-A good place is your home folder or a dedicated `Projects` folder:
+**Create the folder the easy way:** Open Finder (Mac) or File Explorer (Windows), navigate to where you want it, and create a new folder with the name of your project. No spaces in the name — use hyphens instead (e.g. `my-design-system`).
 
-```bash
-# Optional: create a Projects folder if you don't have one
-mkdir ~/Projects
-cd ~/Projects
-```
-
-> 💡 **What is `cd`?** In a terminal, `cd` stands for "change directory" — it moves you into a folder. `~/Projects` means the Projects folder inside your home directory (`~` is a shortcut for your home folder).
+You'll open this folder in Claude Code in Step 1.2.
 
 ---
 
-## Step 1.2 — Create the Next.js project
+## Step 1.2 — Open your project folder in Claude Code and create the Next.js app
 
 > 💡 **What is Next.js?** Next.js is a framework for building websites and web apps. A framework is a pre-built structure that handles all the common plumbing (routing between pages, server/client rendering, etc.) so you can focus on building your actual product. It's built on top of React (a popular UI library) and is what most modern production web apps are built with.
 
-Run this command (replace `your-project-name` with your actual project name, no spaces):
+1. Open the Claude Code app
+2. Click **Open Folder** (or `File → Open`) and select the project folder you created in Step 1.1
+3. Claude Code will open with your folder as the workspace
+
+Now open the **built-in terminal** — look for a Terminal tab at the bottom of the Claude Code window, or press `` Ctrl+` `` (backtick). This is where you'll run setup commands.
+
+In the terminal, run:
 
 ```bash
-npx create-next-app@latest your-project-name
+npx create-next-app@latest .
 ```
+
+> 💡 The `.` at the end means "create the project here, in the current folder" — so you don't end up with a folder inside a folder.
 
 > 💡 **What is `npx`?** `npx` is a tool that comes with Node.js. It downloads and runs a package without permanently installing it. `create-next-app` is the official tool for setting up a new Next.js project.
 
 You'll be asked a series of questions. Answer exactly as shown:
 
 ```
-Would you like to use TypeScript?                 › Yes
-Would you like to use ESLint?                     › Yes
-Would you like to use Tailwind CSS?               › Yes
+Would you like to use TypeScript?                   › Yes
+Would you like to use ESLint?                       › Yes
+Would you like to use Tailwind CSS?                 › Yes
 Would you like your code inside a `src/` directory? › No
-Would you like to use App Router?                 › Yes
-Would you like to use Turbopack for next dev?     › Yes
-What import alias would you like configured?      › @/* (just press Enter)
+Would you like to use App Router?                   › Yes
+Would you like to use Turbopack for next dev?       › Yes
+What import alias would you like configured?        › @/* (just press Enter)
 ```
 
 > 💡 **What are these options?**
@@ -193,13 +185,7 @@ What import alias would you like configured?      › @/* (just press Enter)
 > - **App Router** — the modern way Next.js handles navigation between pages. Always use this for new projects.
 > - **Turbopack** — a faster development server. Makes reloading quicker while you work.
 
-Once it finishes, move into the project folder:
-
-```bash
-cd your-project-name
-```
-
-Start the development server:
+Once it finishes, start the development server from the same terminal:
 
 ```bash
 npm run dev
@@ -207,24 +193,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-**✅ Verify:** You see the default Next.js welcome page. To stop the server at any time, press `Ctrl+C` in the terminal.
+**✅ Verify:** You see the default Next.js welcome page in your browser. To stop the server at any time, click in the terminal and press `Ctrl+C`.
 
 ---
 
-## Step 1.3 — Open the project in a code editor
+## Step 1.3 — Get familiar with the Claude Code layout
 
-You'll need to edit files in this project. If you don't have a code editor:
+Your project files are now visible in the Claude Code file browser on the left side. You'll edit files directly here throughout the guide — click any file to open it.
 
-1. Download **Visual Studio Code** (VS Code) from [code.visualstudio.com](https://code.visualstudio.com)
-2. Install it
-3. Open your project: `File → Open Folder → select your project folder`
+The three areas you'll use most:
+- **File browser (left panel)** — navigate and open project files
+- **Chat panel (right or bottom panel)** — where you give Claude instructions
+- **Terminal (bottom tab)** — where you run `npm` and `git` commands
 
-> You can also open it from the terminal while inside the project folder:
-> ```bash
-> code .
-> ```
+> 💡 You can also use **VS Code** alongside Claude Code if you prefer a more traditional file editor. Download it from [code.visualstudio.com](https://code.visualstudio.com) and open the same project folder there. Both tools can be open at the same time.
 
-**✅ Verify:** You can see your project's files in VS Code's left sidebar.
+**✅ Verify:** You can see files like `app/page.tsx`, `app/globals.css`, and `package.json` in the file browser.
 
 ---
 
@@ -236,7 +220,7 @@ You'll need to edit files in this project. If you don't have a code editor:
 
 ## Step 2.1 — Upgrade to Tailwind v4
 
-Stop the dev server if it's running (`Ctrl+C`), then run:
+In the Claude Code terminal, stop the dev server if it's running (`Ctrl+C`), then run:
 
 ```bash
 npm install tailwindcss@latest @tailwindcss/postcss@latest
@@ -248,7 +232,7 @@ npm install tailwindcss@latest @tailwindcss/postcss@latest
 
 ## Step 2.2 — Update the PostCSS config
 
-Open `postcss.config.mjs` in VS Code and replace its entire contents with:
+Open `postcss.config.mjs` in the Claude Code file browser (click it in the left panel) and replace its entire contents with:
 
 ```js
 export default {
@@ -264,7 +248,7 @@ export default {
 
 > 💡 In Tailwind v4, all configuration moves into `globals.css` using an `@theme inline { }` block. The separate config file is no longer needed.
 
-Delete the file `tailwind.config.ts` from your project root. (Right-click it in VS Code → Delete.)
+Right-click `tailwind.config.ts` in the Claude Code file browser → **Delete**.
 
 ---
 
@@ -272,13 +256,16 @@ Delete the file `tailwind.config.ts` from your project root. (Right-click it in 
 
 This is the most important file in the project. It contains the entire token architecture — all colours, spacing, fonts, shadows — defined as CSS variables in three layers.
 
-**Copy the `globals.css` file from the reference project** and replace your project's `app/globals.css` with it entirely.
+1. Open `app/globals.css` in Claude Code (click it in the file browser)
+2. Select all the contents (`Cmd+A` on Mac, `Ctrl+A` on Windows)
+3. Delete and paste in the entire contents of `globals.css` from the reference project
+4. Save the file (`Cmd+S` / `Ctrl+S`)
 
 > 💡 **What is a CSS variable?** A CSS variable (also called a custom property) is a named value you define once and reuse everywhere. For example, `--primary: oklch(0.5 0.2 20)` defines a variable called `--primary`. Anywhere you write `color: var(--primary)`, it uses that value. When you change it in one place, it changes everywhere.
 
 > 💡 **What is OKLCH?** OKLCH is a modern colour format used instead of the older hex (`#ef003b`) or RGB format. It describes colours by their lightness, saturation, and hue in a way that's more perceptually uniform — meaning "halfway between light and dark" actually looks halfway, which isn't true for hex values. The project stores all colours in OKLCH with a hex comment alongside for reference: `oklch(0.5 0.23 20); /* #ef003b */`
 
-Run the dev server again to confirm nothing broke:
+In the terminal, restart the dev server:
 
 ```bash
 npm run dev
@@ -296,13 +283,16 @@ npm run dev
 
 ## Step 3.1 — Add font files to the project
 
-Create a folder called `fonts` inside your `app` folder:
+Create a folder called `fonts` inside the `app` folder. You can do this two ways:
 
+**Option A — in the terminal:**
 ```bash
 mkdir app/fonts
 ```
 
-Copy your font files into `app/fonts/`. The project uses:
+**Option B — in Claude Code's file browser:** right-click the `app` folder → **New Folder** → name it `fonts`.
+
+Then copy your font files into `app/fonts/` — you can drag and drop them from Finder/File Explorer directly into the Claude Code file browser. The project uses:
 - `PPNeueCorp-TightVariable.ttf` — the headline/display font
 - `Maison Neue Book.otf` — body text (weight 400)
 - `Maison Neue Demi.otf` — medium body text (weight 600)
@@ -316,7 +306,7 @@ If your project uses different fonts, place those files here instead and note th
 
 ## Step 3.2 — Register fonts in `app/layout.tsx`
 
-Open `app/layout.tsx`. This file wraps every page in your app — it's the best place to load fonts that should be available everywhere.
+Open `app/layout.tsx` in the Claude Code file browser. This file wraps every page in your app — it's the best place to load fonts that should be available everywhere.
 
 Find the imports at the top of the file and add the font imports. Then register each font using `localFont`:
 
@@ -350,7 +340,7 @@ Then find the `<body>` tag in the same file and add both font variables to its `
 
 ## Step 3.3 — Add font variables to `globals.css`
 
-Open `app/globals.css` and find the `@theme inline { }` block near the top. Add your font variables inside it:
+Open `app/globals.css` in the file browser and find the `@theme inline { }` block near the top. Add your font variables inside it:
 
 ```css
 @theme inline {
@@ -401,22 +391,19 @@ Update the "Figma collection → code mapping" table in `CLAUDE.md` with your fi
 
 ---
 
-## Step 4.3 — Start a Claude Code session in your project
+## Step 4.3 — Open your project in Claude Code and start a session
 
-In your Terminal, navigate to your project folder and start Claude Code:
+Your project folder should already be open in Claude Code from Step 1.2. If you closed it, reopen it: **File → Open Folder** and select your project.
 
-```bash
-cd path/to/your-project-name
-claude
-```
+Claude Code automatically reads `CLAUDE.md` whenever you open a project that has one — so it already knows your token architecture, rules, and how the `update variables` command works.
 
-Claude will read `CLAUDE.md` automatically and know how your project works.
+To start chatting with Claude about your project, click in the **chat panel** and type your message. Claude can see all your project files and will follow the rules in `CLAUDE.md` automatically.
 
 ---
 
 ## Step 4.4 — Run the variable sync
 
-Type this in the Claude Code session (replace the URL with your actual Figma file URL and Mode collection node ID):
+Type this in the Claude Code **chat panel** (replace the URL with your actual Figma file URL and Mode collection node ID):
 
 ```
 update variables https://www.figma.com/design/[file-key]/[filename]?node-id=[mode-node-id]
@@ -452,7 +439,7 @@ Claude will convert hex colour values to OKLCH automatically and write them into
 
 The `.claude/` folder in your project contains local Claude Code settings, which may include your Figma and Anthropic API tokens. **Never commit this to GitHub** — GitHub scans for secrets and will block your push (and your tokens could be exposed).
 
-Open `.gitignore` in VS Code and add these lines at the bottom:
+Open `.gitignore` in the Claude Code file browser and add these lines at the bottom:
 
 ```
 # Claude local settings (may contain API tokens)
@@ -484,7 +471,7 @@ git branch -M main
 
 ## Step 5.3 — Commit and push your project
 
-In your Terminal (inside the project folder), run these commands one by one:
+In the Claude Code **terminal** (bottom tab), run these commands one by one:
 
 ```bash
 # Stage all your files for commit
@@ -609,15 +596,15 @@ Here's what you now have:
 
 ## Implementing a Figma design
 
-Open a Claude Code session in your project (`claude`) and share a Figma node URL:
+Open your project in the Claude Code app and type in the chat panel:
 
 > *"Implement this design: https://www.figma.com/design/[file-key]/...?node-id=[node-id]"*
 
-Claude will read your Figma frame section by section, extract every value, and write production-ready code that matches the design pixel-perfectly. The rules it follows are defined in `CLAUDE.md` — you don't need to instruct Claude on how to do this.
+Claude will read your Figma frame section by section, extract every value, and write production-ready code that matches the design pixel-perfectly. The rules it follows are defined in `CLAUDE.md` — you don't need to tell Claude how to do this.
 
 ## Keeping variables in sync after a Figma update
 
-Whenever a designer updates variables in Figma:
+Whenever a designer updates variables in Figma, type in the chat panel:
 
 ```
 update variables [figma-url-with-node-id]
@@ -627,7 +614,7 @@ Claude always shows a diff before making any changes. You review and confirm.
 
 ## Deploying a change
 
-Every `git push` to `main` redeploys automatically:
+Every push to GitHub redeploys Vercel automatically. In the Claude Code terminal:
 
 ```bash
 git add .
@@ -641,7 +628,8 @@ git push
 
 | Term | Plain English |
 |---|---|
-| **Terminal** | A text-based interface for controlling your computer by typing commands. On Mac it's called Terminal; on Windows it's Command Prompt or PowerShell. |
+| **Terminal** | A text-based interface for running commands. In this guide, always use the built-in terminal inside the Claude Code app (bottom tab), not a separate Terminal app. |
+| **Claude Code app** | A desktop application by Anthropic. It combines a chat interface with direct access to your project files, a file browser, and a built-in terminal. |
 | **npm** | The package manager that comes with Node.js. Used to install libraries and run project scripts. |
 | **Repository (repo)** | A project tracked by Git. Contains all your files plus their full change history. |
 | **Commit** | A saved snapshot of your project. Like a save state. |
