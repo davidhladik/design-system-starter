@@ -4,12 +4,32 @@ This file tells Claude how this project works. Read it at the start of any task.
 
 ---
 
+## Figma collection links
+
+These are the three Figma variable collections for this project. Always use these when running "update variables" unless the user provides a different link explicitly.
+
+| Layer | Collection | Figma link |
+|---|---|---|
+| Layer 1 — Primitives | Tailwind CSS | https://www.figma.com/design/XRJX5AmcwXFSFOMC8YmYtF/shadcn-ui-kit-Claude-test?node-id=24098-51154 |
+| Layer 2 — Theme pairs | Mode (theme pairs) | https://www.figma.com/design/XRJX5AmcwXFSFOMC8YmYtF/shadcn-ui-kit-Claude-test?node-id=24065-332103 |
+| Layer 3 — Mode | Mode (applied mode) | https://www.figma.com/design/XRJX5AmcwXFSFOMC8YmYtF/shadcn-ui-kit-Claude-test?node-id=24065-332143 |
+
+> If any of these links still say `FIGMA_LINK_LAYER_*`, ask the user to provide the correct Figma URL for that collection before proceeding.
+
+---
+
 ## "Update variables" command
 
-When the user says **"update variables"** and provides a Figma link:
+When the user says **"update variables"**:
+
+- **If no Figma link is provided** — run the sync for all three collections above in order (Layer 1 → Layer 2 → Layer 3), using the stored links in the table above.
+- **If a specific Figma link is provided** — run the sync only for that link.
+- **If any stored link is still a placeholder** (`FIGMA_LINK_LAYER_*`) — stop and ask the user to provide the missing link(s) before doing anything else.
+
+For each collection being synced:
 
 1. Read `design-tokens.md` to load the current mappings and values.
-2. Call `get_variable_defs` on the node ID from the provided Figma link.
+2. Call `get_variable_defs` on the node ID from the Figma link.
 3. Compare every returned Figma variable against its corresponding CSS variable value in `globals.css`.
 4. **Before making any changes**, present a clear diff table showing:
    - ✅ Tokens with no change
@@ -17,6 +37,7 @@ When the user says **"update variables"** and provides a Figma link:
 5. **Wait for explicit user confirmation** ("yes", "apply", etc.) before touching any file.
 6. Once confirmed, convert new hex values to OKLCH and update `globals.css` — both `:root` (light) and `.dark` (dark) blocks. For dark mode, lighten the value slightly when appropriate (e.g. a brand color used on dark surfaces).
 7. Update any descriptive comments in `design-tokens.md` that reference the old value.
+8. Proceed to the next collection only after the user confirms or skips the current one.
 
 Never skip the confirmation step, even if the diff looks trivial.
 
@@ -81,6 +102,8 @@ Layer 1 — Primitives   →   Layer 2 — Theme pairs   →   Layer 3 — Mode
 | Tailwind CSS (primitives)| 24098-51154     | Layer 1 `:root` block          |
 | Mode (theme pairs)       | 24065-332103    | Layer 2 `:root` block          |
 | Mode (applied mode)      | 24065-332143    | Layer 3 `:root` + `.dark`      |
+
+> For a new project, replace the node IDs above and the links in the "Figma collection links" section at the top of this file with your own Figma file's values.
 
 ### How to add a new primitive colour
 

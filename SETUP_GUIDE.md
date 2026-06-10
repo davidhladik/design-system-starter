@@ -374,24 +374,42 @@ Copy both files from the reference project into the **root** of your new project
 
 ---
 
-## Step 4.2 — Find your Figma variable collection node IDs
+## Step 4.2 — Add your three Figma collection links to `CLAUDE.md`
 
-In your Figma file, you need to locate two specific frames/collections and copy their node IDs from the URL.
+This is how Claude always knows which Figma collections to sync — without you having to paste links every time.
 
-**What to look for:**
+Open `CLAUDE.md` in the Claude Code file browser and find the **"Figma collection links"** table near the top. It looks like this:
 
-| Collection | What it contains | Node ID location |
-|---|---|---|
-| **Tailwind CSS** | The raw colour palette (Layer 1 primitives) | Click on the variables table frame. Copy the `node-id` from the URL bar. |
-| **Mode** | The semantic brand tokens — primary, background, etc. (Layers 2 + 3) | Click on the Mode variables frame. Copy `node-id` from the URL. |
+```
+| Layer 1 — Primitives  | Tailwind CSS       | FIGMA_LINK_LAYER_1 |
+| Layer 2 — Theme pairs | Mode (theme pairs) | FIGMA_LINK_LAYER_2 |
+| Layer 3 — Mode        | Mode (applied mode)| FIGMA_LINK_LAYER_3 |
+```
 
-> 💡 **How to find the node ID in Figma:** Click on the frame in Figma. Look at the URL in your browser — it will have `?node-id=24065-332103` (or similar numbers). That `24065-332103` is the node ID. Copy everything after `node-id=`.
+Replace each `FIGMA_LINK_LAYER_*` placeholder with the actual Figma URL for that collection. You need three links — one per row.
 
-Update the "Figma collection → code mapping" table in `CLAUDE.md` with your file's actual node IDs.
+**How to get the links from Figma:**
+
+Your Figma file has three variable collections — each one lives on a specific frame/table in the file. For each collection:
+
+1. Open your Figma file in the browser
+2. Click on the frame that contains that variable collection
+3. Look at the browser URL bar — it will contain `?node-id=12345-67890`
+4. Copy the entire URL and paste it into the table
+
+| What to click on | Which row it goes in |
+|---|---|
+| The colour palette table (raw colours like Red 500, Blue 600) | Layer 1 — Primitives |
+| The theme variables table (light/dark pairs: primary-light, background-dark…) | Layer 2 — Theme pairs |
+| The mode variables table (single values: primary, background…) | Layer 3 — Mode |
+
+> 💡 If you're not sure which frame is which, ask Claude: *"Look at my Figma file [URL] and identify which frames correspond to the three variable collection layers."*
+
+Save `CLAUDE.md` after adding all three links. From this point on, typing `update variables` in the chat panel (with no link) will automatically sync all three collections in sequence.
 
 ---
 
-## Step 4.3 — Open your project in Claude Code and start a session
+## Step 4.4 — Open your project in Claude Code and start a session
 
 Your project folder should already be open in Claude Code from Step 1.2. If you closed it, reopen it: **File → Open Folder** and select your project.
 
@@ -401,33 +419,33 @@ To start chatting with Claude about your project, click in the **chat panel** an
 
 ---
 
-## Step 4.4 — Run the variable sync
+## Step 4.5 — Run the variable sync
 
 Type this in the Claude Code **chat panel** (replace the URL with your actual Figma file URL and Mode collection node ID):
 
 ```
-update variables https://www.figma.com/design/[file-key]/[filename]?node-id=[mode-node-id]
+update variables
 ```
 
-**What happens next:**
+Because you added all three Figma links to `CLAUDE.md` in Step 4.2, you don't need to paste any URL. Claude will automatically sync all three collections (Layer 1 → Layer 2 → Layer 3) in sequence.
+
+**What happens for each collection:**
 
 1. Claude reads `design-tokens.md` to load the token mappings
-2. Claude calls `get_variable_defs` on your Figma node to read the live variable values
+2. Claude reads the stored Figma link for that layer and pulls the live variable values
 3. Claude compares every Figma value against the current CSS value in `globals.css`
 4. Claude shows you a diff table:
    - ✅ Tokens that are already in sync
    - 🔴 Tokens that differ — showing the current value and the new Figma value
 5. **Claude waits for your confirmation before touching any file**
 
-Review the diff. If it looks correct, type `apply` or `yes`.
+Type `apply` to write the changes, or `skip` to leave that collection unchanged and move to the next.
 
-Claude will convert hex colour values to OKLCH automatically and write them into the correct places in `globals.css`.
+Claude converts hex values to OKLCH automatically.
 
-**Repeat this for the Tailwind CSS (Layer 1) collection** using its node ID.
+> 💡 **Why confirm before applying?** A single wrong colour token affects every component that uses it. The diff step lets you catch anything unexpected before files are touched. Never skip it.
 
-> 💡 **Why do we confirm before applying?** Because a single wrong colour value affects every component that uses that token. The diff step lets you catch anything unexpected before it touches real files. Never skip it.
-
-**✅ Verify:** Open `globals.css` in VS Code — the OKLCH values should now match the colours from your Figma variables. Run `npm run dev` and confirm the page colours match your Figma design.
+**✅ Verify:** Open `globals.css` in the file browser — the OKLCH values should now match the colours from your Figma variables. Run `npm run dev` and confirm the page colours match your Figma design.
 
 ---
 
@@ -607,10 +625,10 @@ Claude will read your Figma frame section by section, extract every value, and w
 Whenever a designer updates variables in Figma, type in the chat panel:
 
 ```
-update variables [figma-url-with-node-id]
+update variables
 ```
 
-Claude always shows a diff before making any changes. You review and confirm.
+Claude uses the three stored links from `CLAUDE.md` and syncs all collections in sequence, showing a diff and waiting for your confirmation at each step. You never need to paste a Figma link for routine syncs.
 
 ## Deploying a change
 
